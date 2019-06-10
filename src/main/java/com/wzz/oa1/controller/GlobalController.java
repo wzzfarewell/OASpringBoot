@@ -1,12 +1,17 @@
 package com.wzz.oa1.controller;
 
 import com.wzz.oa1.global.Constant;
+import com.wzz.oa1.global.ServerResponse;
 import com.wzz.oa1.pojo.Employee;
 import com.wzz.oa1.service.EmployeeService;
 import com.wzz.oa1.service.GlobalService;
 import com.wzz.oa1.utils.MD5Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +19,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.UUID;
 
 /**
  * @Author: wzzap
@@ -22,6 +31,7 @@ import javax.servlet.http.HttpSession;
  **/
 @Controller("globalController")
 public class GlobalController {
+    private Logger logger = LoggerFactory.getLogger(GlobalController.class);
 
     @Autowired
     private GlobalService globalService;
@@ -81,8 +91,45 @@ public class GlobalController {
         return "redirect:to_update_password";
     }
 
-    @PostMapping("/upload_file")
-    public String uploadFile(@RequestParam("uploadFile") MultipartFile multipartFile, HttpServletRequest request){
-        return null;
+    @Value("${upload.absolute-path}")
+    public String uploadPath;           // 文件在服务器中的绝对路径
+
+    @Value("${upload.access-path}")
+    public String accessPath;           // 文件的访问路径前缀
+    /**
+     * 头像上传
+     * @param uploadFile
+     * @param request
+     * @return
+     */
+    @PostMapping("/upload_icon")
+    public String uploadFile(@RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request, HttpSession session) throws FileNotFoundException {
+        File folder = new File(uploadPath);
+//        logger.info(ResourceUtils.getURL("classpath:").getPath());
+        if(!folder.isDirectory())
+            folder.mkdirs();
+        String oldName = uploadFile.getOriginalFilename();
+        Employee employee = (Employee) session.getAttribute(Constant.CURRENT_USER);
+        String newName = employee.getSn() + "_" + employee.getName() +
+                oldName.substring(oldName.lastIndexOf("."), oldName.length());
+        // 保存到数据库
+        ServerResponse<Employee> serverResponse = globalService.uploadIcon(accessPath + newName, employee);
+        if(serverResponse.isSuccess()){
+            try {
+                // 保存到服务器
+                uploadFile.transferTo(new File(folder, newName));
+                // 更新session
+                session.setAttribute(Constant.CURRENT_USER, serverResponse.getData());
+                logger.info(serverResponse.getData().getIcon().getPath());
+//                logger.info(folder + newName);
+//            logger.info(request.getContextPath());
+                // 返回访问路径
+//                return request.getScheme() + "://" + request.getServerName() + ":" +
+//                        request.getServerPort() + accessPath + newName;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return "redirect:self";
     }
 }

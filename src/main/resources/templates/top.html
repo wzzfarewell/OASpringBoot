@@ -9,7 +9,12 @@
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown menu-merge">
                 <a href="#" class="dropdown-toggle fw600 p15" data-toggle="dropdown">
-                    <img th:src="@{/assets/img/avatars/5.jpg}" alt="avatar" class="mw30 br64">
+                    <div th:if="${session.current_user.icon != null}">
+                        <img th:src="${session.current_user.icon.path}" alt="avatar" class="mw30 br64">
+                    </div>
+                    <div th:if="${session.current_user.icon == null}">
+                        <img th:src="@{/assets/img/avatars/4.jpg}" alt="avatar" class="mw30 br64">
+                    </div>
                     <span class="hidden-xs pl15" th:text="${session.current_user.sn}"></span>
                     <span class="caret caret-tp hidden-xs"></span>
                 </a>

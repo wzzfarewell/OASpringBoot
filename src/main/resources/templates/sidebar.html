@@ -11,7 +11,12 @@
             <div class="sidebar-widget author-widget">
                 <div class="media">
                     <a class="media-left" href="#">
-                        <img th:src="@{/assets/img/avatars/3.jpg}" class="img-responsive">
+                        <div th:if="${session.current_user.icon != null}">
+                            <img th:src="${session.current_user.icon.path}" alt="avatar" class="mw30 br64">
+                        </div>
+                        <div th:if="${session.current_user.icon == null}">
+                            <img th:src="@{/assets/img/avatars/4.jpg}" alt="avatar" class="mw30 br64">
+                        </div>
                     </a>
                     <div class="media-body">
                         <div class="media-author">

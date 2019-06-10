@@ -23,3 +23,7 @@ mybatis:
 server:
   servlet:
     context-path: /oa
+
+upload:
+  absolute-path: D:/Oa/UploadFiles/Icon/
+  access-path: /oa/employee/icon/

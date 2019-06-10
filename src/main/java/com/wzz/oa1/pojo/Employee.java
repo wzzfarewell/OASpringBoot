@@ -13,6 +13,8 @@ public class Employee {
 
     private Department department;
 
+    private Icon icon;
+
     public Employee(String sn, String password, String name, String departmentSn, String post) {
         this.sn = sn;
         this.password = password;
@@ -71,5 +73,13 @@ public class Employee {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    public Icon getIcon() {
+        return icon;
+    }
+
+    public void setIcon(Icon icon) {
+        this.icon = icon;
     }
 }

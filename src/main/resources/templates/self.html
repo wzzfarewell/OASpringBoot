@@ -65,6 +65,17 @@
                         <div class="col-md-2">职务</div>
                         <div class="col-md-4" th:text="${session.current_user.post}"></div>
                     </div>
+                    <!---->
+                    <div class="section row">
+                        <div class="col-md-2">头像上传</div>
+                        <div class="col-md-4">
+                            <form th:action="@{/upload_icon}" method="post" enctype="multipart/form-data">
+                                <input type="file" value="请选择文件" name="uploadFile"/>
+                                <br/>
+                                <input type="submit" value="上传"/>
+                            </form>
+                        </div>
+                    </div>
                     <div class="panel-footer text-right">
                         <button type="button" class="button" onclick="javascript:window.history.go(-1);"> 返回 </button>
                     </div>
