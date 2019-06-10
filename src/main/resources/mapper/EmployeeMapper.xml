@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wzz.oa1.dao.EmployeeMapper" >
+  <resultMap id="BaseResultMap" type="com.wzz.oa1.pojo.Employee" >
+      <id property="sn" column="sn" javaType="java.lang.String" />
+      <result property="password" column="password" javaType="java.lang.String" />
+      <result property="name" column="name" javaType="java.lang.String" />
+      <result property="departmentSn" column="department_sn" javaType="java.lang.String" />
+      <result property="post" column="post" javaType="java.lang.String" />
+
+      <association property="department" column="department_sn" javaType="com.wzz.oa1.pojo.Department">
+        <id property="sn" column="dsn" javaType="String"/>
+        <result property="name" column="dname" javaType="String"/>
+      </association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sn, password, name, department_sn, post
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    e.*, d.sn dsn, d.name dname
+    from employee e left join department d on d.sn = e.department_sn
+    where e.sn = #{sn,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from employee
+    where sn = #{sn,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wzz.oa1.pojo.Employee" >
+    insert into employee (sn, password, name, 
+      department_sn, post)
+    values (#{sn,jdbcType=CHAR}, #{password,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{departmentSn,jdbcType=CHAR}, #{post,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wzz.oa1.pojo.Employee" >
+    insert into employee
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sn != null" >
+        sn,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="departmentSn != null" >
+        department_sn,
+      </if>
+      <if test="post != null" >
+        post,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sn != null" >
+        #{sn,jdbcType=CHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentSn != null" >
+        #{departmentSn,jdbcType=CHAR},
+      </if>
+      <if test="post != null" >
+        #{post,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wzz.oa1.pojo.Employee" >
+    update employee
+    <set >
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentSn != null" >
+        department_sn = #{departmentSn,jdbcType=CHAR},
+      </if>
+      <if test="post != null" >
+        post = #{post,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sn = #{sn,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wzz.oa1.pojo.Employee" >
+    update employee
+    set password = #{password,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      department_sn = #{departmentSn,jdbcType=CHAR},
+      post = #{post,jdbcType=VARCHAR}
+    where sn = #{sn,jdbcType=CHAR}
+  </update>
+
+  <select id="checkPassword" resultType="java.lang.Integer">
+    select count(1)
+    from employee
+    where sn = #{sn} and password = #{oldPassword}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    e.*, d.sn dsn, d.name dname
+    from employee e left join department d on d.sn = e.department_sn
+  </select>
+
+</mapper>

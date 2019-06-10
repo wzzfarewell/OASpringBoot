@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wzz.oa1.dao.DealRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.wzz.oa1.pojo.DealRecord" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="claim_voucher_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="deal_sn" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="deal_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="deal_way" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="deal_result" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="comment" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, claim_voucher_id, deal_sn, deal_time, deal_way, deal_result, comment
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from deal_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from deal_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wzz.oa1.pojo.DealRecord" >
+    insert into deal_record (id, claim_voucher_id, deal_sn, 
+      deal_time, deal_way, deal_result, 
+      comment)
+    values (#{id,jdbcType=INTEGER}, #{claimVoucherId,jdbcType=INTEGER}, #{dealSn,jdbcType=CHAR}, 
+      #{dealTime,jdbcType=TIMESTAMP}, #{dealWay,jdbcType=VARCHAR}, #{dealResult,jdbcType=VARCHAR}, 
+      #{comment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wzz.oa1.pojo.DealRecord" >
+    insert into deal_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="claimVoucherId != null" >
+        claim_voucher_id,
+      </if>
+      <if test="dealSn != null" >
+        deal_sn,
+      </if>
+      <if test="dealTime != null" >
+        deal_time,
+      </if>
+      <if test="dealWay != null" >
+        deal_way,
+      </if>
+      <if test="dealResult != null" >
+        deal_result,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="claimVoucherId != null" >
+        #{claimVoucherId,jdbcType=INTEGER},
+      </if>
+      <if test="dealSn != null" >
+        #{dealSn,jdbcType=CHAR},
+      </if>
+      <if test="dealTime != null" >
+        #{dealTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dealWay != null" >
+        #{dealWay,jdbcType=VARCHAR},
+      </if>
+      <if test="dealResult != null" >
+        #{dealResult,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wzz.oa1.pojo.DealRecord" >
+    update deal_record
+    <set >
+      <if test="claimVoucherId != null" >
+        claim_voucher_id = #{claimVoucherId,jdbcType=INTEGER},
+      </if>
+      <if test="dealSn != null" >
+        deal_sn = #{dealSn,jdbcType=CHAR},
+      </if>
+      <if test="dealTime != null" >
+        deal_time = #{dealTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dealWay != null" >
+        deal_way = #{dealWay,jdbcType=VARCHAR},
+      </if>
+      <if test="dealResult != null" >
+        deal_result = #{dealResult,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null" >
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wzz.oa1.pojo.DealRecord" >
+    update deal_record
+    set claim_voucher_id = #{claimVoucherId,jdbcType=INTEGER},
+      deal_sn = #{dealSn,jdbcType=CHAR},
+      deal_time = #{dealTime,jdbcType=TIMESTAMP},
+      deal_way = #{dealWay,jdbcType=VARCHAR},
+      deal_result = #{dealResult,jdbcType=VARCHAR},
+      comment = #{comment,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wzz.oa1.dao.ClaimVoucherMapper" >
+  <resultMap id="BaseResultMap" type="com.wzz.oa1.pojo.ClaimVoucher" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="cause" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_sn" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="next_deal_sn" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="total_amount" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="status" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, cause, create_sn, create_time, next_deal_sn, total_amount, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from claim_voucher
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from claim_voucher
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wzz.oa1.pojo.ClaimVoucher" >
+    insert into claim_voucher (id, cause, create_sn, 
+      create_time, next_deal_sn, total_amount, 
+      status)
+    values (#{id,jdbcType=INTEGER}, #{cause,jdbcType=VARCHAR}, #{createSn,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{nextDealSn,jdbcType=CHAR}, #{totalAmount,jdbcType=DOUBLE}, 
+      #{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wzz.oa1.pojo.ClaimVoucher" >
+    insert into claim_voucher
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cause != null" >
+        cause,
+      </if>
+      <if test="createSn != null" >
+        create_sn,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="nextDealSn != null" >
+        next_deal_sn,
+      </if>
+      <if test="totalAmount != null" >
+        total_amount,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cause != null" >
+        #{cause,jdbcType=VARCHAR},
+      </if>
+      <if test="createSn != null" >
+        #{createSn,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nextDealSn != null" >
+        #{nextDealSn,jdbcType=CHAR},
+      </if>
+      <if test="totalAmount != null" >
+        #{totalAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wzz.oa1.pojo.ClaimVoucher" >
+    update claim_voucher
+    <set >
+      <if test="cause != null" >
+        cause = #{cause,jdbcType=VARCHAR},
+      </if>
+      <if test="createSn != null" >
+        create_sn = #{createSn,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nextDealSn != null" >
+        next_deal_sn = #{nextDealSn,jdbcType=CHAR},
+      </if>
+      <if test="totalAmount != null" >
+        total_amount = #{totalAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wzz.oa1.pojo.ClaimVoucher" >
+    update claim_voucher
+    set cause = #{cause,jdbcType=VARCHAR},
+      create_sn = #{createSn,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      next_deal_sn = #{nextDealSn,jdbcType=CHAR},
+      total_amount = #{totalAmount,jdbcType=DOUBLE},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

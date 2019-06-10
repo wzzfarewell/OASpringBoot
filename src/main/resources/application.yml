@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/oa?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: 123456
+
+  thymeleaf:
+    encoding: UTF-8
+    prefix: classpath:/templates/
+    servlet:
+      content-type: text/html
+    suffix: .html
+    # 一项是禁用缓存来获取实时页面数据，一项是非严格的HTML检查，其他采用默认项即可
+    cache: false
+    mode: LEGACYHTML5
+
+# mybatis日志配置
+mybatis:
+  config-location: classpath:/mybatis-config.xml
+  mapper-locations: classpath:mapper/*.xml
+
+server:
+  servlet:
+    context-path: /oa
