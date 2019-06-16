@@ -55,7 +55,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/add")
-    public String add(Employee employee, Map<String, Object> map){
+    public String add(Employee employee){
         ServerResponse<String> res = employeeService.addEmployee(employee);
 //        map.put("res", res);
         if(res.isSuccess())
@@ -63,4 +63,28 @@ public class EmployeeController {
 //        map.put("msg", res.getMsg());
         return "redirect:to_add";
     }
+
+    @RequestMapping(value = "/to_update", params = "sn")
+    public String toUpdate(String sn, Map<String, Object> map){
+        Employee employee = employeeService.select(sn);
+        map.put("employee", employee);
+        map.put("dList", departmentService.selectAll());
+        map.put("pList", Constant.getPosts());
+        return "employee_update";
+    }
+
+    @PostMapping("/update")
+    public String update(Employee employee){
+        int resultCount = employeeService.updateEmployee(employee);
+        if(resultCount > 0)
+            return "redirect:list";
+        return "redirect:to_update?sn=" + employee.getSn();
+    }
+
+    @RequestMapping(value = "/remove", params = "sn")
+    public String remove(String sn){
+        employeeService.remove(sn);
+        return "redirect:list";
+    }
+
 }

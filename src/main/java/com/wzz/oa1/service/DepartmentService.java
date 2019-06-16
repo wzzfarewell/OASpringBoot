@@ -13,4 +13,12 @@ import java.util.List;
 public interface DepartmentService {
 
     List<Department> selectAll();
+
+    int remove(String sn);
+
+    Department select(String sn);
+
+    int update(Department department);
+
+    int add(Department department);
 }

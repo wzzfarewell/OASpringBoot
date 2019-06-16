@@ -17,4 +17,9 @@ public interface EmployeeService {
     ServerResponse<List<Employee>> selectAll();
 
     ServerResponse<String> addEmployee(Employee employee);
+
+    Employee select(String sn);
+
+    int remove(String sn);
+
 }

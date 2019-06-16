@@ -49,4 +49,14 @@ public class EmployeeServiceImpl implements EmployeeService {
             return ServerResponse.createBySuccessMessage("添加员工成功！");
         return ServerResponse.createByErrorMessage("添加员工异常！");
     }
+
+    @Override
+    public Employee select(String sn) {
+        return employeeMapper.selectByPrimaryKey(sn);
+    }
+
+    @Override
+    public int remove(String sn) {
+        return employeeMapper.deleteByPrimaryKey(sn);
+    }
 }

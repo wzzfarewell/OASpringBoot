@@ -112,18 +112,16 @@ public class GlobalController {
         Employee employee = (Employee) session.getAttribute(Constant.CURRENT_USER);
         String newName = employee.getSn() + "_" + employee.getName() +
                 oldName.substring(oldName.lastIndexOf("."), oldName.length());
-        // 保存到数据库
+        // 保存到数据库, 这里保存的是图片的访问路径
         ServerResponse<Employee> serverResponse = globalService.uploadIcon(accessPath + newName, employee);
         if(serverResponse.isSuccess()){
             try {
-                // 保存到服务器
+                // 保存到服务器，图片的绝对路径
                 uploadFile.transferTo(new File(folder, newName));
                 // 更新session
                 session.setAttribute(Constant.CURRENT_USER, serverResponse.getData());
                 logger.info(serverResponse.getData().getIcon().getPath());
-//                logger.info(folder + newName);
-//            logger.info(request.getContextPath());
-                // 返回访问路径
+//                 //返回访问路径
 //                return request.getScheme() + "://" + request.getServerName() + ":" +
 //                        request.getServerPort() + accessPath + newName;
             } catch (IOException e) {
