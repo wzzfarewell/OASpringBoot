@@ -21,4 +21,6 @@ public interface EmployeeMapper {
     int checkPassword(@Param("sn") String sn, @Param("oldPassword") String oldPassword);
 
     List<Employee> selectAll();
+
+    List<Employee> selectByDepartmentAndPost(@Param("dsn") String dsn, @Param("post") String post);
 }

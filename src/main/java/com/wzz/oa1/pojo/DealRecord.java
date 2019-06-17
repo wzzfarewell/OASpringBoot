@@ -17,6 +17,16 @@ public class DealRecord {
 
     private String comment;
 
+    private Employee dealer;
+
+    public Employee getDealer() {
+        return dealer;
+    }
+
+    public void setDealer(Employee dealer) {
+        this.dealer = dealer;
+    }
+
     public DealRecord(Integer id, Integer claimVoucherId, String dealSn, Date dealTime, String dealWay, String dealResult, String comment) {
         this.id = id;
         this.claimVoucherId = claimVoucherId;

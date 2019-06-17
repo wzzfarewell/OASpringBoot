@@ -1,5 +1,7 @@
 package com.wzz.oa1.pojo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class ClaimVoucher {
@@ -16,6 +18,25 @@ public class ClaimVoucher {
     private Double totalAmount;
 
     private String status;
+
+    private Employee creator;   // 创建人
+    private Employee dealer;    // 处理人
+
+    public Employee getCreator() {
+        return creator;
+    }
+
+    public void setCreator(Employee creator) {
+        this.creator = creator;
+    }
+
+    public Employee getDealer() {
+        return dealer;
+    }
+
+    public void setDealer(Employee dealer) {
+        this.dealer = dealer;
+    }
 
     public ClaimVoucher(Integer id, String cause, String createSn, Date createTime, String nextDealSn, Double totalAmount, String status) {
         this.id = id;
