@@ -2,8 +2,6 @@ package com.wzz.oa1.controller;
 
 import com.wzz.oa1.dto.ClaimVoucherInfo;
 import com.wzz.oa1.global.Constant;
-import com.wzz.oa1.pojo.ClaimVoucher;
-import com.wzz.oa1.pojo.ClaimVoucherItem;
 import com.wzz.oa1.pojo.DealRecord;
 import com.wzz.oa1.pojo.Employee;
 import com.wzz.oa1.service.ClaimVoucherService;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 import java.util.Map;
 
 /**
